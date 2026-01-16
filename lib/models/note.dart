@@ -1,0 +1,38 @@
+import 'dart:convert';
+
+class Note {
+  String title;
+  String content;
+  DateTime date;
+
+  Note({
+    required this.title,
+    required this.content,
+    required this.date,
+  });
+
+  // Convert Note → Map
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'content': content,
+      'date': date.toIso8601String(),
+    };
+  }
+
+  // Convert Map → Note
+  factory Note.fromMap(Map<String, dynamic> map) {
+    return Note(
+      title: map['title'],
+      content: map['content'],
+      date: DateTime.parse(map['date']),
+    );
+  }
+
+  // Convert Note → JSON String
+  String toJson() => json.encode(toMap());
+
+  // Convert JSON String → Note
+  factory Note.fromJson(String source) =>
+      Note.fromMap(json.decode(source));
+}
